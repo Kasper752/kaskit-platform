@@ -3,10 +3,11 @@ values ('00000000-0000-0000-0000-000000000001', 'Кровля Север', 'Кр
 on conflict do nothing;
 
 -- Demo password for both users: KaskitDemo2026!
+-- Admin 2FA is disabled only in this local seed so the demo login can be tested end to end.
 insert into users (id, email, full_name, password_hash, status, is_kaskit_staff, two_factor_required)
 values
-  ('00000000-0000-0000-0000-000000000010', 'owner@example.com', 'Владелец Кровля Север', '$2a$12$19WyQKjgMxer8wPwoVEIVeDvFffnLjUD585vB/P/iHukYYyx3Zpnu', 'active', false, false),
-  ('00000000-0000-0000-0000-000000000011', 'admin@kaskit.ru', 'KASKIT Admin', '$2a$12$19WyQKjgMxer8wPwoVEIVeDvFffnLjUD585vB/P/iHukYYyx3Zpnu', 'active', true, true)
+  ('00000000-0000-0000-0000-000000000010', 'client@kaskit-demo.ru', 'Владелец Кровля Север', '$2a$12$19WyQKjgMxer8wPwoVEIVeDvFffnLjUD585vB/P/iHukYYyx3Zpnu', 'active', false, false),
+  ('00000000-0000-0000-0000-000000000011', 'admin@kaskit.ru', 'KASKIT Admin', '$2a$12$19WyQKjgMxer8wPwoVEIVeDvFffnLjUD585vB/P/iHukYYyx3Zpnu', 'active', true, false)
 on conflict do nothing;
 
 insert into tenant_memberships (tenant_id, user_id, role)

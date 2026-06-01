@@ -47,3 +47,14 @@ Default local URLs:
 <script src="https://app.kaskit.ru/widget.js" data-project="PROJECT-123" async></script>
 ```
 
+## Demo Accounts
+
+Client cabinet:
+
+- Email: `client@kaskit-demo.ru`
+- Password: `KaskitDemo2026!`
+
+KASKIT admin:
+
+- Email: `admin@kaskit.ru`
+- Password: `KaskitDemo2026!`

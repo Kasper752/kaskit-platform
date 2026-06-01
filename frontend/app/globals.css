@@ -37,6 +37,14 @@ textarea {
   grid-template-columns: 248px minmax(0, 1fr);
 }
 
+.adminShell .sidebar {
+  background: #0f1f1b;
+}
+
+.adminShell .nav button[aria-pressed="true"] {
+  background: #1f3a33;
+}
+
 .sidebar {
   background: #111827;
   color: #f8fafc;
@@ -127,7 +135,8 @@ textarea {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
 }
 
 .button {
@@ -141,6 +150,7 @@ textarea {
   align-items: center;
   gap: 8px;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .button.primary {
@@ -238,6 +248,11 @@ textarea {
 .status.win {
   background: #def7ec;
   color: var(--green);
+}
+
+.status.danger {
+  background: #fde8e8;
+  color: var(--red);
 }
 
 .timeline {
@@ -342,6 +357,53 @@ textarea {
   margin-top: 24px;
 }
 
+.demoAccounts {
+  display: grid;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.demoAccount {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f8fafc;
+  padding: 10px;
+  text-align: left;
+  display: grid;
+  gap: 3px;
+  cursor: pointer;
+}
+
+.demoAccount span,
+.demoAccount small {
+  color: var(--muted);
+}
+
+.errorText {
+  margin: -2px 0 12px;
+  color: var(--red);
+  font-size: 13px;
+}
+
+.userBadge {
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0 10px;
+  background: #e8f1ff;
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.userBadge.admin {
+  background: #e3f6ee;
+  color: var(--green);
+}
+
 @media (max-width: 1100px) {
   .shell,
   .login {
@@ -376,6 +438,10 @@ textarea {
   .topbar {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .actions {
+    flex-wrap: wrap;
   }
 
   .nav {
