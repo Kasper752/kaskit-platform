@@ -3,8 +3,8 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "KASKIT Hub",
-  description: "Client platform for KASKIT leads, messages, calls, and metrics."
+  title: "KASKIT Платформа",
+  description: "Платформа KASKIT для заявок, сообщений, звонков и метрик."
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

@@ -48,14 +48,14 @@ const demoUsers: DemoUser[] = [
     email: "admin@kaskit.ru",
     password: "KaskitDemo2026!",
     role: "kaskit",
-    name: "KASKIT Admin",
+    name: "Администратор KASKIT",
     tenantLabel: "KASKIT internal"
   }
 ];
 
 const clientNavItems: Array<{ id: ClientView; label: string; icon: ComponentType<{ size?: number }> }> = [
   { id: "dashboard", label: "Панель", icon: LayoutDashboard },
-  { id: "inbox", label: "Inbox", icon: Inbox },
+  { id: "inbox", label: "Обращения", icon: Inbox },
   { id: "leads", label: "Лиды", icon: ClipboardList },
   { id: "contacts", label: "Контакты", icon: Users },
   { id: "analytics", label: "Аналитика", icon: BarChart3 },
@@ -66,7 +66,7 @@ const adminNavItems: Array<{ id: AdminView; label: string; icon: ComponentType<{
   { id: "adminOverview", label: "Обзор", icon: ShieldCheck },
   { id: "adminTenants", label: "Клиенты", icon: Building2 },
   { id: "adminProjects", label: "Проекты", icon: BriefcaseBusiness },
-  { id: "adminSupport", label: "Support access", icon: LifeBuoy },
+  { id: "adminSupport", label: "Доступ поддержки", icon: LifeBuoy },
   { id: "adminAudit", label: "Аудит", icon: FileWarning }
 ];
 
@@ -110,10 +110,19 @@ const timeline = [
 ];
 
 const tenants = [
-  { name: "Кровля Север", projects: "1 проект", plan: "MVP", status: "Виджет активен", city: "Москва" },
-  { name: "Септик Дом", projects: "2 проекта", plan: "Growth", status: "Ждет телефонию", city: "Санкт-Петербург" },
-  { name: "Окна Профи", projects: "1 проект", plan: "MVP", status: "Ошибка webhook", city: "Казань" }
+  { name: "Кровля Север", projects: "1 проект", plan: "Старт", status: "Виджет активен", city: "Москва" },
+  { name: "Септик Дом", projects: "2 проекта", plan: "Рост", status: "Ждет телефонию", city: "Санкт-Петербург" },
+  { name: "Окна Профи", projects: "1 проект", plan: "Старт", status: "Ошибка вебхука", city: "Казань" }
 ];
+
+function Brand({ mode = "client" }: { mode?: "client" | "admin" }) {
+  return (
+    <div className="brand">
+      <img className="brandLogo" src="/kaskit-logo.png" alt="KASKIT" />
+      <span>{mode === "admin" ? "Админка" : "Платформа"}</span>
+    </div>
+  );
+}
 
 function LoginScreen({ onLogin }: { onLogin: (user: DemoUser) => void }) {
   const [email, setEmail] = useState(demoUsers[0].email);
@@ -140,15 +149,12 @@ function LoginScreen({ onLogin }: { onLogin: (user: DemoUser) => void }) {
   return (
     <main className="login">
       <section className="loginPanel">
-        <div className="brand">
-          <span className="brandMark">K</span>
-          KASKIT Hub
-        </div>
+        <Brand />
         <h1>Вход в платформу</h1>
         <p className="muted">Выберите тестовую роль: клиент подрядчика или внутренняя команда KASKIT.</p>
         <div style={{ height: 24 }} />
         <div className="field">
-          <label>Email</label>
+          <label>Почта</label>
           <input value={email} onChange={(event) => setEmail(event.target.value)} type="email" />
         </div>
         <div className="field">
@@ -166,7 +172,7 @@ function LoginScreen({ onLogin }: { onLogin: (user: DemoUser) => void }) {
             <button className="demoAccount" key={user.email} onClick={() => fillDemo(user)}>
               <strong>{user.role === "client" ? "Клиент" : "KASKIT"}</strong>
               <span>{user.email}</span>
-              <small>{user.password}</small>
+              <small>Пароль: {user.password}</small>
             </button>
           ))}
         </div>
@@ -175,7 +181,7 @@ function LoginScreen({ onLogin }: { onLogin: (user: DemoUser) => void }) {
         <div className="loginAsideInner">
           <h2>Две зоны: клиентский кабинет и админка KASKIT</h2>
           <p className="muted">
-            Клиент видит только свои лиды и метрики. KASKIT видит проекты, интеграции, ошибки, тарифы и support access без свободного доступа к лидам.
+            Клиент видит только свои лиды и метрики. KASKIT видит проекты, интеграции, ошибки, тарифы и доступы поддержки без свободного доступа к лидам.
           </p>
           <div className="signalGrid">
             <div className="card metric">
@@ -185,13 +191,13 @@ function LoginScreen({ onLogin }: { onLogin: (user: DemoUser) => void }) {
             </div>
             <div className="card metric">
               <span>KASKIT</span>
-              <strong>Admin</strong>
+              <strong>Админка</strong>
               <small>проекты, интеграции, аудит</small>
             </div>
             <div className="card metric">
               <span>Доступ</span>
               <strong>24ч</strong>
-              <small>support window по причине</small>
+              <small>доступ по причине</small>
             </div>
           </div>
         </div>
@@ -257,7 +263,7 @@ function Dashboard() {
             <div className="leadItem">
               <PhoneMissed size={18} />
               <strong>3 пропущенных звонка</strong>
-              <span className="muted">Авто-SMS будет подключено после телефонии.</span>
+              <span className="muted">Авто-СМС будет подключено после телефонии.</span>
             </div>
             <div className="leadItem">
               <BellRing size={18} />
@@ -333,7 +339,7 @@ function InboxView() {
 function LeadsView() {
   return (
     <section className="card">
-      <h2 className="sectionTitle">CRM-лиды</h2>
+      <h2 className="sectionTitle">Лиды и сделки</h2>
       <table className="table">
         <thead>
           <tr>
@@ -395,8 +401,8 @@ function AnalyticsView() {
             {[
               ["Визиты", "18 420"],
               ["Клики по телефону", "312"],
-              ["WhatsApp", "186"],
-              ["Telegram", "94"],
+              ["Клики WhatsApp", "186"],
+              ["Клики Telegram", "94"],
               ["Формы", "126"]
             ].map(([label, value]) => (
               <tr key={label}><td>{label}</td><td>{value}</td></tr>
@@ -430,11 +436,11 @@ function SettingsView() {
         <h2 className="sectionTitle">Проект</h2>
         <div className="field"><label>Бизнес</label><input defaultValue="Кровля Север" /></div>
         <div className="field"><label>Сайт</label><input defaultValue="https://example.com" /></div>
-        <div className="field"><label>Project key</label><input defaultValue="PROJECT-DEMO" /></div>
+        <div className="field"><label>Ключ проекта</label><input defaultValue="PROJECT-DEMO" /></div>
         <button className="button"><Plus size={18} />Скопировать скрипт</button>
       </section>
       <section className="card">
-        <h2 className="sectionTitle">Авто-SMS при пропущенном звонке</h2>
+        <h2 className="sectionTitle">Авто-СМС при пропущенном звонке</h2>
         <div className="field"><label>Статус</label><select defaultValue="off"><option value="off">Выключено</option><option value="on">Включено</option></select></div>
         <div className="field"><label>Задержка</label><input defaultValue="45 секунд" /></div>
         <div className="field"><label>Шаблон</label><textarea defaultValue="Здравствуйте! Вы звонили в {{businessName}}. Сейчас не смогли ответить. Напишите сюда или оставьте заявку: {{link}}. Мы скоро свяжемся." /></div>
@@ -449,9 +455,9 @@ function AdminOverview() {
       <div className="grid metrics">
         {[
           ["Клиенты", "3", "2 активных проекта"],
-          ["Ошибки интеграций", "1", "webhook телефонии"],
-          ["SMS лимиты", "71%", "использовано в среднем"],
-          ["Support доступы", "0", "нет активных окон"]
+          ["Ошибки интеграций", "1", "вебхук телефонии"],
+          ["Лимиты СМС", "71%", "использовано в среднем"],
+          ["Доступы поддержки", "0", "нет активных окон"]
         ].map(([label, value, hint]) => (
           <div className="card metric" key={label}>
             <span>{label}</span>
@@ -480,11 +486,11 @@ function AdminOverview() {
           <div className="leadList">
             <div className="leadItem">
               <strong>KASKIT не читает лиды без причины</strong>
-              <span className="muted">Клиент выдает доступ на 24 часа, либо support/admin открывает данные с причиной. Все действия пишутся в аудит.</span>
+              <span className="muted">Клиент выдает доступ на 24 часа, либо специалист KASKIT открывает данные с причиной. Все действия пишутся в аудит.</span>
             </div>
             <div className="leadItem">
-              <strong>2FA для админов</strong>
-              <span className="muted">В продакшене вход KASKIT staff должен требовать второй фактор.</span>
+              <strong>Двухфакторная защита для админов</strong>
+              <span className="muted">В рабочей версии вход команды KASKIT должен требовать второй фактор.</span>
             </div>
           </div>
         </section>
@@ -514,7 +520,7 @@ function AdminTenantsView() {
         <h2 className="sectionTitle">Создание клиента</h2>
         <div className="field"><label>Название</label><input defaultValue="Фасады Юг" /></div>
         <div className="field"><label>Ниша</label><input defaultValue="Строительство" /></div>
-        <div className="field"><label>Тариф</label><select defaultValue="mvp"><option value="mvp">MVP</option><option value="growth">Growth</option></select></div>
+        <div className="field"><label>Тариф</label><select defaultValue="start"><option value="start">Старт</option><option value="growth">Рост</option></select></div>
         <button className="button primary"><Plus size={18} />Создать клиента</button>
       </section>
     </div>
@@ -530,7 +536,7 @@ function AdminProjectsView() {
           <tr>
             <th>Проект</th>
             <th>Клиент</th>
-            <th>Project key</th>
+            <th>Ключ проекта</th>
             <th>Виджет</th>
             <th>Интеграции</th>
           </tr>
@@ -539,7 +545,7 @@ function AdminProjectsView() {
           {[
             ["Основной сайт", "Кровля Север", "PROJECT-DEMO", "Активен", "Telegram готов"],
             ["Септики Ленобласть", "Септик Дом", "PROJECT-SPB1", "Активен", "Телефония ожидает"],
-            ["Окна под ключ", "Окна Профи", "PROJECT-OKNA", "Нет событий", "Webhook ошибка"]
+            ["Окна под ключ", "Окна Профи", "PROJECT-OKNA", "Нет событий", "Ошибка вебхука"]
           ].map(([project, tenant, key, widget, integrations]) => (
             <tr key={key}>
               <td><strong>{project}</strong></td>
@@ -559,7 +565,7 @@ function AdminSupportView() {
   return (
     <div className="grid settingsGrid">
       <section className="card">
-        <h2 className="sectionTitle">Support access</h2>
+        <h2 className="sectionTitle">Доступ поддержки</h2>
         <div className="leadList">
           <div className="leadItem">
             <strong>Доступ не активен</strong>
@@ -575,7 +581,7 @@ function AdminSupportView() {
             {[
               ["Кровля Север", "Интеграция Telegram", "закрыто"],
               ["Септик Дом", "Проверка звонков", "ожидает клиента"],
-              ["Окна Профи", "Ошибка webhook", "нужна причина"]
+              ["Окна Профи", "Ошибка вебхука", "нужна причина"]
             ].map(([tenant, reason, status]) => (
               <tr key={`${tenant}-${reason}`}><td>{tenant}</td><td>{reason}</td><td>{status}</td></tr>
             ))}
@@ -602,7 +608,7 @@ function AdminAuditView() {
         <tbody>
           {[
             ["12:12", "admin@kaskit.ru", "project.created", "Подключение нового клиента"],
-            ["11:40", "support@kaskit.ru", "support_access.requested", "Проверка webhook телефонии"],
+            ["11:40", "support@kaskit.ru", "Запрошен доступ поддержки", "Проверка вебхука телефонии"],
             ["10:18", "client@kaskit-demo.ru", "lead.updated", "Статус лида изменен"]
           ].map(([time, userEmail, action, reason]) => (
             <tr key={`${time}-${action}`}><td>{time}</td><td>{userEmail}</td><td>{action}</td><td>{reason}</td></tr>
@@ -648,7 +654,7 @@ function ClientArea({ view }: { view: ClientView }) {
 function titleFor(view: AppView) {
   const map: Record<AppView, string> = {
     dashboard: "Панель подрядчика",
-    inbox: "Единый Inbox",
+    inbox: "Единый поток обращений",
     leads: "Лиды и сделки",
     contacts: "Контакты",
     analytics: "Аналитика",
@@ -656,7 +662,7 @@ function titleFor(view: AppView) {
     adminOverview: "Админка KASKIT",
     adminTenants: "Клиенты KASKIT",
     adminProjects: "Проекты и подключения",
-    adminSupport: "Support access",
+    adminSupport: "Доступ поддержки",
     adminAudit: "Аудит действий"
   };
   return map[view];
@@ -697,10 +703,7 @@ export default function Home() {
   return (
     <main className={isKaskit ? "shell adminShell" : "shell"}>
       <aside className="sidebar">
-        <div className="brand">
-          <span className="brandMark">K</span>
-          {isKaskit ? "KASKIT Admin" : "KASKIT Hub"}
-        </div>
+        <Brand mode={isKaskit ? "admin" : "client"} />
         <nav className="nav">
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -714,7 +717,7 @@ export default function Home() {
         </nav>
         <div className="sidebarFooter">
           <span>{isKaskit ? "admin.kaskit.ru" : "app.kaskit.ru"}</span>
-          <span>{isKaskit ? "Workspace: KASKIT" : `Tenant: ${user.tenantLabel}`}</span>
+          <span>{isKaskit ? "Раздел: KASKIT" : `Компания: ${user.tenantLabel}`}</span>
           <span>{user.email}</span>
         </div>
       </aside>
@@ -726,7 +729,7 @@ export default function Home() {
           </div>
           <div className="actions">
             <span className={isKaskit ? "userBadge admin" : "userBadge"}>
-              {isKaskit ? "KASKIT staff" : "Клиент"}
+              {isKaskit ? "Команда KASKIT" : "Клиент"}
             </span>
             <button className="button">
               <MessageCircle size={18} />

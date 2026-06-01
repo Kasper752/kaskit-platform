@@ -7,7 +7,7 @@ on conflict do nothing;
 insert into users (id, email, full_name, password_hash, status, is_kaskit_staff, two_factor_required)
 values
   ('00000000-0000-0000-0000-000000000010', 'client@kaskit-demo.ru', 'Владелец Кровля Север', '$2a$12$19WyQKjgMxer8wPwoVEIVeDvFffnLjUD585vB/P/iHukYYyx3Zpnu', 'active', false, false),
-  ('00000000-0000-0000-0000-000000000011', 'admin@kaskit.ru', 'KASKIT Admin', '$2a$12$19WyQKjgMxer8wPwoVEIVeDvFffnLjUD585vB/P/iHukYYyx3Zpnu', 'active', true, false)
+  ('00000000-0000-0000-0000-000000000011', 'admin@kaskit.ru', 'Администратор KASKIT', '$2a$12$19WyQKjgMxer8wPwoVEIVeDvFffnLjUD585vB/P/iHukYYyx3Zpnu', 'active', true, false)
 on conflict do nothing;
 
 insert into tenant_memberships (tenant_id, user_id, role)
