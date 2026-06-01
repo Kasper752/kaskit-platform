@@ -6,6 +6,8 @@ import {
   BriefcaseBusiness,
   Building2,
   CheckCircle2,
+  ChevronDown,
+  ChevronRight,
   ClipboardList,
   Cog,
   FileWarning,
@@ -119,7 +121,11 @@ function Brand({ mode = "client" }: { mode?: "client" | "admin" }) {
   return (
     <div className="brand">
       <img className="brandLogo" src="/kaskit-logo.png" alt="KASKIT" />
-      <span>{mode === "admin" ? "Админка" : "Платформа"}</span>
+      <span className="brandWord">
+        <span>ASK</span>
+        <span>IT</span>
+      </span>
+      {mode === "admin" && <small>Админка</small>}
     </div>
   );
 }
@@ -279,59 +285,63 @@ function Dashboard() {
 
 function InboxView() {
   return (
-    <div className="layoutThree">
+    <div className="inboxLayout">
       <section className="card">
-        <h2 className="sectionTitle">Лиды и диалоги</h2>
+        <div className="sectionHeader">
+          <h2 className="sectionTitle">Лиды и диалоги</h2>
+          <button className="sourceFilter">
+            Все источники
+            <ChevronDown size={16} />
+          </button>
+        </div>
         <div className="leadList">
           {leads.map((lead, index) => (
             <div className="leadItem" key={lead.phone}>
-              <strong>{lead.name}</strong>
-              <span className="muted">{lead.source}</span>
-              <div style={{ marginTop: 8 }}>
-                <span className={index === 0 ? "status hot" : "status"}>{lead.status}</span>
+              <div className={`leadAvatar leadAvatar${index + 1}`}>{lead.name.slice(0, 2).toUpperCase()}</div>
+              <div className="leadBody">
+                <strong>{lead.name}</strong>
+                <span className="muted">{lead.source}</span>
+                <div style={{ marginTop: 8 }}>
+                  <span className={index === 0 ? "status hot" : "status"}>{lead.status}</span>
+                </div>
               </div>
+              <span className="leadTime">{index === 0 ? "2 мин назад" : index === 1 ? "15 мин назад" : "1 ч назад"}</span>
+              <ChevronRight className="leadChevron" size={18} />
             </div>
           ))}
         </div>
       </section>
-      <section className="card">
-        <h2 className="sectionTitle">История касаний</h2>
-        <div className="timeline">
-          {timeline.map((item) => (
-            <div className="message" key={item.title}>
-              <strong>{item.title}</strong>
-              <span>{item.body}</span>
-              <div className="muted" style={{ marginTop: 6 }}>{item.time}</div>
+      <div className="inboxAside">
+        <section className="card">
+          <h2 className="sectionTitle">История касаний</h2>
+          <div className="timeline">
+            {timeline.map((item) => (
+              <div className="message" key={item.title}>
+                <strong>{item.title}</strong>
+                <span>{item.body}</span>
+                <div className="muted" style={{ marginTop: 6 }}>{item.time}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+        <section className="card clientCard">
+          <h2 className="sectionTitle">Карточка клиента</h2>
+          <div className="clientSummary">
+            <div className="clientAvatar">ИИ</div>
+            <div>
+              <p><strong>Илья Иванов</strong> <span className="status hot">Новый</span></p>
+              <p className="muted">+7 999 120-44-18</p>
+              <p className="muted">ilya@example.com</p>
             </div>
-          ))}
-        </div>
-      </section>
-      <section className="card">
-        <h2 className="sectionTitle">Карточка клиента</h2>
-        <p><strong>Илья</strong></p>
-        <p className="muted">+7 999 120-44-18</p>
-        <p className="muted">Химки · Кровля под ключ</p>
-        <div className="field">
-          <label>Статус</label>
-          <select defaultValue="new">
-            <option value="new">Новый</option>
-            <option value="contacted">Связались</option>
-            <option value="estimate_needed">Нужна смета</option>
-            <option value="estimate_sent">Смета отправлена</option>
-            <option value="thinking">Думает</option>
-            <option value="won">Выигран</option>
-            <option value="lost">Потерян</option>
-          </select>
-        </div>
-        <div className="field">
-          <label>Следующее касание</label>
-          <input defaultValue="Сегодня 17:00" />
-        </div>
-        <button className="button primary">
-          <CheckCircle2 size={18} />
-          Сохранить
-        </button>
-      </section>
+          </div>
+          <p className="muted">Источник: Яндекс / сайт</p>
+          <p className="muted">Ответственный: Ирина П.</p>
+          <button className="button primary">
+            <CheckCircle2 size={18} />
+            Открыть карточку
+          </button>
+        </section>
+      </div>
     </div>
   );
 }
@@ -716,9 +726,14 @@ export default function Home() {
           })}
         </nav>
         <div className="sidebarFooter">
-          <span>{isKaskit ? "admin.kaskit.ru" : "app.kaskit.ru"}</span>
-          <span>{isKaskit ? "Раздел: KASKIT" : `Компания: ${user.tenantLabel}`}</span>
-          <span>{user.email}</span>
+          <div className="profileChip">
+            <span className="profileAvatar">{isKaskit ? "AK" : "ИИ"}</span>
+            <span>
+              <strong>{isKaskit ? "KASKIT" : "Илья И."}</strong>
+              <small>{isKaskit ? "Администратор" : user.tenantLabel}</small>
+            </span>
+            <ChevronDown size={16} />
+          </div>
         </div>
       </aside>
       <section className="main">
