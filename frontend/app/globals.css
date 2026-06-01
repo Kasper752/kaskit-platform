@@ -1,13 +1,17 @@
 :root {
   color-scheme: light;
-  --bg: #fff8ea;
-  --panel: #fffdf7;
-  --panel-soft: #fff1d7;
-  --line: #e5c99b;
+  --bg: #fffaf1;
+  --sidebar: #f4e7c8;
+  --sidebar-soft: #f7edd4;
+  --panel: rgba(255, 253, 247, 0.9);
+  --panel-solid: #fffdf7;
+  --panel-soft: #fff3db;
+  --line: #ead2a7;
+  --line-soft: rgba(207, 172, 112, 0.28);
   --text: #15120f;
   --muted: #756a5e;
   --orange: #ff8a00;
-  --orange-dark: #df6500;
+  --orange-dark: #d86400;
   --green: #168a5b;
   --red: #cf3d3d;
   --amber: #ad6a00;
@@ -21,10 +25,10 @@
 body {
   margin: 0;
   background:
-    linear-gradient(rgba(117, 106, 94, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(117, 106, 94, 0.08) 1px, transparent 1px),
+    linear-gradient(rgba(117, 106, 94, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(117, 106, 94, 0.045) 1px, transparent 1px),
     var(--bg);
-  background-size: 42px 42px;
+  background-size: 48px 48px;
   color: var(--text);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
@@ -39,34 +43,67 @@ textarea {
 .shell {
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 248px minmax(0, 1fr);
+  grid-template-columns: 260px minmax(0, 1fr);
 }
 
 .adminShell .sidebar {
-  background: #15120f;
+  background: var(--sidebar);
 }
 
 .adminShell .nav button[aria-pressed="true"] {
   background: var(--orange);
-  color: #15120f;
+  color: #fffdf7;
 }
 
 .sidebar {
-  background: #15120f;
-  color: #fff8ea;
-  padding: 24px 18px;
+  background:
+    radial-gradient(circle at 26% 4%, rgba(255, 255, 255, 0.48), transparent 34%),
+    linear-gradient(180deg, #f8edcf 0%, var(--sidebar) 58%, #f1dfb9 100%);
+  border-right: 1px solid var(--line-soft);
+  box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.55);
+  color: var(--text);
+  padding: 26px 20px 22px;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 28px;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-weight: 800;
+  gap: 0;
+  font-weight: 900;
   letter-spacing: 0;
-  color: #fff8ea;
+  color: var(--text);
+  font-size: 38px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.brand small {
+  align-self: flex-start;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1;
+  margin-left: 6px;
+}
+
+.brandWord {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0;
+  transform: translate(-8px, 2px);
+  font-family: Impact, "Arial Black", Inter, ui-sans-serif, system-ui, sans-serif;
+  font-style: italic;
+  letter-spacing: -1.4px;
+}
+
+.brandWord span:first-child {
+  color: var(--text);
+}
+
+.brandWord span:last-child {
+  color: var(--orange);
 }
 
 .loginPanel .brand {
@@ -74,49 +111,105 @@ textarea {
 }
 
 .brandLogo {
-  width: 72px;
-  height: 48px;
+  width: 98px;
+  height: 68px;
   object-fit: contain;
   flex: 0 0 auto;
+  filter: drop-shadow(0 8px 18px rgba(98, 58, 0, 0.14));
 }
 
 .nav {
   display: grid;
-  gap: 6px;
+  gap: 10px;
 }
 
 .nav button {
   width: 100%;
-  min-height: 40px;
+  min-height: 46px;
   border: 0;
   border-radius: 8px;
-  color: #f7ead2;
+  color: #251f18;
   background: transparent;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 9px 10px;
+  gap: 12px;
+  padding: 10px 13px;
   cursor: pointer;
   text-align: left;
+  font-size: 17px;
+  font-weight: 650;
+  transition: background 140ms ease, color 140ms ease, box-shadow 140ms ease;
+}
+
+.nav button:hover {
+  background: rgba(255, 253, 247, 0.45);
+}
+
+.nav button svg {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
 }
 
 .nav button[aria-pressed="true"] {
-  color: #15120f;
-  background: var(--orange);
+  color: #fffdf7;
+  background: linear-gradient(180deg, #ff9a12 0%, #ff8200 100%);
+  box-shadow: 0 10px 24px rgba(255, 138, 0, 0.22);
 }
 
 .sidebarFooter {
   margin-top: auto;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   display: grid;
   gap: 10px;
-  color: #f7ead2;
+  color: var(--text);
   font-size: 13px;
+}
+
+.profileChip {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  color: var(--text);
+}
+
+.profileChip strong,
+.profileChip small {
+  display: block;
+}
+
+.profileChip small {
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.profileAvatar,
+.leadAvatar,
+.clientAvatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #f4dcae;
+  color: #b86600;
+  font-weight: 800;
+}
+
+.profileAvatar {
+  width: 40px;
+  height: 40px;
+  font-size: 15px;
 }
 
 .main {
   min-width: 0;
-  padding: 22px;
+  padding: 52px 46px;
+  background:
+    linear-gradient(rgba(117, 106, 94, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(117, 106, 94, 0.045) 1px, transparent 1px),
+    var(--bg);
+  background-size: 48px 48px;
 }
 
 .topbar {
@@ -124,19 +217,27 @@ textarea {
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  align-items: center;
-  margin-bottom: 18px;
+  align-items: flex-start;
+  margin-bottom: 36px;
+}
+
+.topbar > div:first-child {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .topbar h1 {
-  font-size: 24px;
+  font-size: 36px;
   line-height: 1.15;
   margin: 0 0 5px;
+  font-weight: 900;
+  white-space: nowrap;
 }
 
 .topbar p {
   margin: 0;
   color: var(--muted);
+  font-size: 20px;
 }
 
 .actions {
@@ -145,6 +246,7 @@ textarea {
   gap: 10px;
   flex-wrap: nowrap;
   flex-shrink: 0;
+  padding-top: 4px;
 }
 
 .button {
@@ -152,7 +254,7 @@ textarea {
   border-radius: 8px;
   min-height: 38px;
   padding: 0 12px;
-  background: #fffdf7;
+  background: var(--panel-solid);
   color: var(--text);
   display: inline-flex;
   align-items: center;
@@ -164,7 +266,7 @@ textarea {
 .button.primary {
   background: var(--orange);
   border-color: var(--orange-dark);
-  color: #15120f;
+  color: #fffdf7;
   font-weight: 800;
 }
 
@@ -181,7 +283,9 @@ textarea {
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 16px;
+  padding: 22px;
+  box-shadow: 0 14px 36px rgba(98, 58, 0, 0.045);
+  backdrop-filter: blur(4px);
 }
 
 .metric {
@@ -211,9 +315,47 @@ textarea {
   align-items: start;
 }
 
+.inboxLayout {
+  display: grid;
+  grid-template-columns: minmax(380px, 0.96fr) minmax(420px, 1fr);
+  gap: 26px;
+  align-items: start;
+}
+
+.inboxAside {
+  display: grid;
+  gap: 20px;
+}
+
 .sectionTitle {
-  font-size: 15px;
+  font-size: 22px;
   margin: 0 0 12px;
+  font-weight: 900;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.sectionHeader .sectionTitle {
+  margin: 0;
+}
+
+.sourceFilter {
+  min-height: 34px;
+  border: 1px solid var(--line-soft);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.8);
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  cursor: pointer;
 }
 
 .leadList {
@@ -224,8 +366,37 @@ textarea {
 .leadItem {
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 11px;
-  background: #fffdf7;
+  padding: 16px 14px;
+  background: rgba(255, 253, 247, 0.78);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  gap: 14px;
+  align-items: center;
+}
+
+.leadBody {
+  min-width: 0;
+}
+
+.leadAvatar {
+  width: 46px;
+  height: 46px;
+  font-size: 16px;
+}
+
+.leadAvatar2 {
+  background: #fce1c5;
+  color: #c16616;
+}
+
+.leadAvatar3 {
+  background: #dff0d4;
+  color: #517c32;
+}
+
+.leadTime,
+.leadChevron {
+  color: var(--muted);
 }
 
 .leadItem strong,
@@ -246,7 +417,8 @@ textarea {
   padding: 0 9px;
   background: var(--panel-soft);
   color: var(--ink);
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 700;
 }
 
 .status.hot {
@@ -270,10 +442,31 @@ textarea {
 }
 
 .message {
-  border-left: 3px solid var(--orange);
-  padding: 10px 12px;
-  background: #fff8ea;
+  border-left: 3px solid #cfac70;
+  padding: 10px 12px 10px 18px;
+  background: transparent;
   border-radius: 0 8px 8px 0;
+}
+
+.clientCard {
+  display: grid;
+  gap: 12px;
+}
+
+.clientSummary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.clientSummary p {
+  margin: 0 0 4px;
+}
+
+.clientAvatar {
+  width: 70px;
+  height: 70px;
+  font-size: 26px;
 }
 
 .table {
@@ -319,7 +512,7 @@ textarea {
   border-radius: 8px;
   min-height: 40px;
   padding: 9px 10px;
-  background: #fffdf7;
+  background: var(--panel-solid);
   color: var(--text);
 }
 
@@ -331,7 +524,7 @@ textarea {
 
 .loginPanel {
   padding: 42px;
-  background: #fffdf7;
+  background: var(--panel-solid);
   border-right: 1px solid var(--line);
   display: grid;
   align-content: center;
@@ -347,10 +540,10 @@ textarea {
   display: grid;
   align-content: center;
   background:
-    linear-gradient(rgba(117, 106, 94, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(117, 106, 94, 0.08) 1px, transparent 1px),
-    #fff8ea;
-  background-size: 42px 42px;
+    linear-gradient(rgba(117, 106, 94, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(117, 106, 94, 0.045) 1px, transparent 1px),
+    var(--bg);
+  background-size: 48px 48px;
 }
 
 .loginAsideInner {
@@ -382,7 +575,7 @@ textarea {
   width: 100%;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: #fff8ea;
+  background: var(--bg);
   padding: 10px;
   text-align: left;
   display: grid;
@@ -415,7 +608,7 @@ textarea {
 }
 
 .userBadge.admin {
-  background: #15120f;
+  background: #241f19;
   color: #fff8ea;
 }
 
@@ -429,6 +622,7 @@ textarea {
     position: sticky;
     top: 0;
     z-index: 5;
+    padding: 20px;
   }
 
   .nav {
@@ -436,6 +630,7 @@ textarea {
   }
 
   .layoutThree,
+  .inboxLayout,
   .metrics,
   .settingsGrid,
   .signalGrid {
@@ -461,6 +656,33 @@ textarea {
 
   .nav {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .nav button {
+    font-size: 16px;
+  }
+
+  .brandLogo {
+    width: 84px;
+    height: 58px;
+  }
+
+  .topbar h1 {
+    font-size: 30px;
+    white-space: normal;
+  }
+
+  .topbar p {
+    font-size: 16px;
+  }
+
+  .leadItem {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .leadTime,
+  .leadChevron {
+    display: none;
   }
 
   .loginAside h2 {
