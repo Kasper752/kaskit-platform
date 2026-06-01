@@ -1,0 +1,20 @@
+{
+  "name": "kaskit-platform",
+  "private": true,
+  "version": "0.1.0",
+  "description": "KASKIT Hub: multi-tenant client platform for leads, calls, messages, metrics, and support access.",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspaces",
+    "dev:frontend": "npm run dev --workspace frontend",
+    "dev:backend": "npm run dev --workspace backend",
+    "build": "npm run build --workspaces",
+    "typecheck": "npm run typecheck --workspaces"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
